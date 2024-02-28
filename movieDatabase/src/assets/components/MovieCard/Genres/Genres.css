@@ -1,0 +1,14 @@
+.genre-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.genre-container span {
+  border: 2px solid var(--color-accent-medium);
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+}
