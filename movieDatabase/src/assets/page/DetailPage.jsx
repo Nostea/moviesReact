@@ -1,9 +1,8 @@
-import "./MovieList.css";
-import MovieCard from "../MovieCard/MovieCard";
-import SearchBar from "../Searchbar/Searchbar";
 import { useEffect, useState } from "react";
+import MovieCard from "../components/MovieCard/MovieCard";
+import { Link, useParams } from "react-router-dom";
 
-const MovieList = () => {
+const DetailPage = () => {
   const movies = [
     {
       title: "The Shawshank Redemption",
@@ -2006,79 +2005,23 @@ const MovieList = () => {
       rate: "8.0",
     },
   ];
+  const [movieData, setMovieData] = useState(movies);
 
-  //  wegen irgendwas wird beim neurendern der moviesData auf movies gesetzt. Deswegen useEffekt zum aktualisieren
-  const [movieData, setMovieData] = useState([]);
+  const { id } = useParams();
 
-  useEffect(() => setMovieData(movies), []);
+  useEffect(() => {
+    const find = movies.find((item) => item.title === id);
+    setMovieData(find);
+  }, []);
 
-  const showAllMoviesSortedByRating = () => {
-    const sortedRating = movies.sort((a, b) => (a.rate <= b.rate ? 1 : -1));
-    setMovieData(sortedRating);
-    console.log("sorted rating");
-    console.log(sortedRating);
-  };
-
-  const showSortedByYearUp = () => {
-    const sortedYearUp = movies.sort((a, b) => (a.year <= b.year ? 1 : -1));
-    setMovieData(sortedYearUp);
-    console.log("sorted year up");
-    console.log(movieData);
-  };
-
-  const showSortedByYearDown = () => {
-    const sortedYearDown = movies.sort((a, b) => (a.year >= b.year ? 1 : -1));
-    setMovieData(sortedYearDown);
-    console.log("sorted year down");
-
-    console.log(movieData);
-  };
-
-  const showSortByTitleAtoZ = () => {
-    const sortedAtoZ = movies.sort((a, b) => (b.title <= a.title ? 1 : -1));
-    setMovieData(sortedAtoZ);
-    console.log("sorted A to Z");
-    console.log(movieData);
-  };
-
-  const showSortByTitleZtoA = () => {
-    const sortedZtoA = movies.sort((a, b) => (a.title <= b.title ? 1 : -1));
-    setMovieData(sortedZtoA);
-    console.log("sorted Z to A");
-    console.log(movieData);
-  };
-  /*
-  const showFilteredByTitleInput = () => {
-    setMovieData()
-  }
-*/
   return (
-    <section className="movie-list-section">
-      <SearchBar />
-      <div className="buttons-wrapper">
-        <button onClick={showSortedByYearUp} type="button">
-          Year Up
-        </button>
-        <button onClick={showSortedByYearDown} type="button">
-          Year Down
-        </button>
-        <button onClick={showAllMoviesSortedByRating} className="solid-button" type="button">
-          Sort By Rating
-        </button>
-        <button onClick={showSortByTitleAtoZ} type="button">
-          A-Z
-        </button>
-        <button onClick={showSortByTitleZtoA} type="button">
-          Z-A
-        </button>
-      </div>
-      <div className="movie-list-grid">
-        {movieData.map((movieItem, index) => (
-          <MovieCard transferMovieItem={movieItem} key={index} />
-        ))}
-      </div>
-    </section>
+    <>
+      <section>
+        <h1>{movieData.title}</h1>
+        <p>{}</p>
+      </section>
+    </>
   );
 };
 
-export default MovieList;
+export default DetailPage;
